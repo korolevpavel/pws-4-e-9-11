@@ -1,17 +1,12 @@
 from sqlalchemy import *
 from app import db
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, sessionmaker
 
-Base = declarative_base()
-metadata = Base.metadata
-
-class User(Base):
+class User(db.Model):
     __tablename__ = 'users'
 
     _id = Column(Integer, primary_key=True)
     username = Column(String(30), unique=True)
-    email = Column(String, primary_key=True)
+    email = Column(String(100), unique=True, nullable=False)
     password = Column(String)
     authenticated = Column(Boolean, default=False)
 
@@ -22,7 +17,7 @@ class User(Base):
         return self.authenticated
 
 
-class Event(Base):
+class Event(db.Model):
     __tablename__ = 'events'
 
     _id = Column(Integer, primary_key=True)
