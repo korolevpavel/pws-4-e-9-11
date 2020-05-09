@@ -1,0 +1,34 @@
+{% extends "bootstrap/base.html" %}
+
+{% block navbar %}
+    {% include "navbar.html" %}
+{% endblock %}
+
+{% block content %}
+<table class="table table-striped table-dark">
+    <tr>
+        <td style="width: 10px;">#</td>
+        <td style="width: 150px;"> Создано </td>
+        <td style="width: 150px;"> Крайний срок </td>
+        <td style="width: 150px;"> Автор </td>
+        <td style="width: 150px;"> Тема </td>
+        <td style="width: 150px;"> Описание </td>
+    </tr>
+</table>
+{% if events %}
+{% for event in events %}
+<table class="table table-striped table-light table-bordered">
+    <tr>
+        <td style="width: 10px;"> {{ loop.index }} </td>
+        <td style="width: 150px;"> {{ event.date_start }} </td>
+        <td style="width: 150px;"> {{ event.date_end }} </td>
+        <td style="width: 150px;"> {{ event.author }} </td>
+        <td style="width: 150px;"> {{ event.subject }} </td>
+        <td style="width: 150px;"> {{ event.description }} </td>
+    </tr>
+</table>
+{% endfor %}
+{% else %}
+<h2 style="display: flex; justify-content: center;">Событий не найдено. ¯\_(ツ)_/¯ </h2>
+{% endif %}
+{% endblock content %}

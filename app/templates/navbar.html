@@ -1,0 +1,9 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    {% if not current_user.is_authenticated %}
+    <a class="nav-link btn-outline-light" href="/login">Авторизация</a>
+    <a class="nav-link btn-outline-light" href="/create_user">Регистрация</a>
+    {% else %}
+    <a class="nav-link btn-outline-light" href="#">Создать событие</a>
+    <a class="nav-link btn-outline-light" href="/logout">Выйти</a>
+    {% endif %}
+</nav>
