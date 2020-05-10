@@ -28,3 +28,7 @@ class Event(db.Model):
     author = Column(Integer, ForeignKey('users._id'), nullable=False)
     subject = Column(String(80), unique=False, nullable=False)
     description = Column(String(300), unique=False, nullable=True)
+
+    def get_author(self):
+        user = User.query.filter(User._id == self.author).first()
+        return user.username

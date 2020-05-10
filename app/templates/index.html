@@ -22,7 +22,7 @@
         <td style="width: 10px;"> {{ loop.index }} </td>
         <td style="width: 150px;"> {{ event.date_start }} </td>
         <td style="width: 150px;"> {{ event.date_end }} </td>
-        <td style="width: 150px;"> {{ event.author }} </td>
+        <td style="width: 150px;"> {{ event.get_author() }} </td>
         <td style="width: 150px;"> {{ event.subject }} </td>
         <td style="width: 150px;"> {{ event.description }} </td>
     </tr>
