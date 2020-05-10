@@ -3,7 +3,8 @@ from .models import *
 from .forms import *
 from flask import request, redirect, render_template, flash
 from flask_login import login_user, logout_user, current_user, login_required
-
+import datetime
+import logging
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -57,3 +58,30 @@ def logout():
     logout_user()
     flash('До новых встреч!')
     return redirect("/")
+
+
+# Events
+@app.route('/add', methods=["GET", "POST"])
+def add_event():
+    form = EventForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            subject = request.form.get('subject')
+            description = request.form.get('description')
+            date_start = request.form.get('date_start')
+            date_end = request.form.get('date_end')
+            event = Event(
+                subject=subject,
+                description=description,
+                date_start=date_start,
+                date_end=date_end,
+                author=current_user.get_id())
+            db.session.add(event)
+            db.session.commit()
+            return redirect("/")
+    return render_template("add_event.html", form=form, date_start=datetime.datetime.now())
+
+@app.route("/my_events", methods=["GET", "POST"])
+def my_events():
+    events = Event.query.filter(Event.author==current_user.get_id())
+    return render_template('index.html', events=events, current_user=current_user)
