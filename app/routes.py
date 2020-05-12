@@ -105,22 +105,11 @@ def edit_event(_id):
 
 @app.route('/del/<int:_id>', methods=["GET", "POST"])
 def del_event(_id):
-    event = Event.query.filter(Event._id == int(_id)).first()
-    form = EventForm(obj=event)
     if request.method == 'POST':
-        if form.validate_on_submit():
-            subject = request.form.get('subject')
-            description = request.form.get('description')
-            date_start = request.form.get('date_start')
-            date_end = request.form.get('date_end')
-            event.subject = subject
-            event.description = description
-            event.date_start = date_start
-            event.date_end = date_end
-            event.author = current_user.get_id()
-            db.session.commit()
-        return redirect("/")
-    return render_template("add_event.html", form=form, date_start=datetime.datetime.now())
+        event = Event.query.filter(Event._id == int(_id)).first()
+        db.session.delete(event)
+        db.session.commit()
+    return redirect("/")
 
 
 @app.route("/my_events", methods=["GET", "POST"])
