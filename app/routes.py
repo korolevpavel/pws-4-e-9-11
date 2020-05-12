@@ -29,7 +29,7 @@ def create_user():
         user = User(email=email, username=username, password=bcrypt.generate_password_hash(password).decode('utf-8'))
         db.session.add(user)
         db.session.commit()
-        return redirect("/")
+        return redirect("/login")
     return render_template("register.html", form=form)
 
 
