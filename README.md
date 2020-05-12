@@ -1,6 +1,6 @@
 # pws-4-e9-11
 ## Многопользовательский сервис планирования событий на Flask и PostgreSQL
-[![Heroku](https://https://heroku-badge.herokuapp.com/?app=pws-4-e9-11)]
+[![Heroku](https://heroku-badge.herokuapp.com/?app=pws-4-e9-11)]
 
 Для запуска приложения необходимо:
 * Склонировать репозиторий
