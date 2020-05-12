@@ -9,7 +9,7 @@ import logging
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    events = Event.query.all()
+    events = Event.query.order_by(Event._id).all()
     return render_template('index.html', events=events, current_user=current_user)
 
 
@@ -103,8 +103,28 @@ def edit_event(_id):
     return render_template("add_event.html", form=form, date_start=datetime.datetime.now())
 
 
+@app.route('/del/<int:_id>', methods=["GET", "POST"])
+def del_event(_id):
+    event = Event.query.filter(Event._id == int(_id)).first()
+    form = EventForm(obj=event)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            subject = request.form.get('subject')
+            description = request.form.get('description')
+            date_start = request.form.get('date_start')
+            date_end = request.form.get('date_end')
+            event.subject = subject
+            event.description = description
+            event.date_start = date_start
+            event.date_end = date_end
+            event.author = current_user.get_id()
+            db.session.commit()
+        return redirect("/")
+    return render_template("add_event.html", form=form, date_start=datetime.datetime.now())
+
+
 @app.route("/my_events", methods=["GET", "POST"])
 def my_events():
     if request.method == 'GET':
-        events = Event.query.filter(Event.author == current_user.get_id())
+        events = Event.query.filter(Event.author == current_user.get_id()).order_by(Event.date_start.desc()).all()
         return render_template('index.html', events=events, current_user=current_user)

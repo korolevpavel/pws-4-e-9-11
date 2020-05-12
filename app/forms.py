@@ -30,4 +30,4 @@ class EventForm(FlaskForm):
     date_end = DateTimeField("Крайник срок", default=datetime.date.today(), format='%Y-%m-%d %H:%M:%S',
                              validators=[DataRequired(message="Не правильный формат даты")], )
 
-    submit = SubmitField('Создать событие')
+    submit = SubmitField('Сохранить')
